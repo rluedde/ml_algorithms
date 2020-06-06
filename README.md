@@ -29,5 +29,15 @@ can be varied.
 
 ## K-means clustering
 
-Hi!
+Here is how I implemented k-means clustering: 
 
+1. Start with _k_ clusters
+2. Randomly select _k_ datapoints to be the starting cluster centers. We will improve
+these centers as the algorithm runs.
+3. For each point that isn't a cluster center, calculate the distance between the point
+and each of the _k_ clusters. 
+4. Classify the point as the cluster center that it is closest to. 
+5. Once all points have been classified, compute the mean of each cluster and use these 
+means as the cluster centers. 
+6. Repeat steps 3-5 until there the the there is no change in classifications from
+one iteration to the next.
