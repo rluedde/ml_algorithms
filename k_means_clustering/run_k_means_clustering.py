@@ -5,8 +5,8 @@ import pandas as pd
 df = sb.load_dataset("iris")
 
 
-df = pd.DataFrame({"x":[1,2,3,34,5, 12],  "y":[1,2,3,34,5, 12], "z":[1,2,3,34,5,12]})
+df = pd.DataFrame({"x":[1.1,1.9,10.1,12, 20,25]})
 
 
-km = KMeansClassifier(3, "clust_names", df.x, df.y, df.z)
+km = KMeansClassifier(3, "clust_names", 3, df.x)
 print(km.classify())
