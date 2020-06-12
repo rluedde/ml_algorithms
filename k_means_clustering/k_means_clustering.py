@@ -1,19 +1,23 @@
 import numpy as np
 import pandas as pd
 from scipy.spatial import distance
+from functools import reduce
 
 class KMeansClassifier:
 
     # Don't pass features in an iterable 
-    def __init__(self, k, clust_names, attempts, *features):
+    def __init__(self, k, attempts, *features):
         # number of clusters
         self.k = k
-
         self.num_features = len(features)
-        # list of numpy arrays
+        # array of features
         self.features = np.array(list(map(lambda ser: np.array(ser), features))).transpose()
+        # for naming the classified df
+        self.feat_names = [ser.name for ser in features]
+        self.feat_names.append("clusters")
         # for keeping track of the distances between each point and the cluster means
         self.distances =  np.zeros((len(self.features),k))
+        # attempts to try to find a classification combo that minimizes within-cluster var
         self.attempts = attempts
 
 
@@ -27,6 +31,8 @@ class KMeansClassifier:
         for i in range(self.attempts):
 
             # Get beginning points that haven't been tried yet
+            # Store the indices because it's cheaper than storign the centers but the difference
+            # is definitely marginal.
             while True:
                 centers, indices = self._choose_beg_clusters(tried_begs)
                 if indices not in tried_begs:
@@ -51,6 +57,7 @@ class KMeansClassifier:
                     for k in range(self.k):
                         self.distances[i, k] = distance.euclidean(self.features[i], centers[k])
 
+                # Here's where the actual classification happens
                 self.clust_ids = np.argmin(self.distances, axis = 1)
 
                 # Use a df to find the centers of each cluster with
@@ -59,18 +66,17 @@ class KMeansClassifier:
                 dist_df["clust_ids"] = self.clust_ids
                 centers = np.array(dist_df.groupby("clust_ids").mean())
 
-            # Store classifications and the corresponding within-cluster
+            # Store classifications and corresponding total within-cluster
             # variance in a dictionary 
-            id_bytes = self.clust_ids.tostring()
             var = self._get_variance(self.clust_ids, self.features, centers)
-            classifications[id_bytes] = var
+            classifications[var] = self.clust_ids
 
-            # TODO: return a dataframe made of each of the features, each of the clust_ids 
-            # and if it's specified, each of the clust_ids as strings from the clust_names
-            # dict arg
-        # TODO: need to get multiple clust_ids, return the one with the best error
-        return(len(classifications))
-#        return self.clust_ids
+        # Find the classification that minimizes within-cluster variation
+        min_error_classification = classifications[reduce(min, classifications.keys())].reshape(len(self.features), 1)
+        data = np.concatenate((self.features, min_error_classification), axis = 1)
+        final_df = pd.DataFrame(data, columns=self.feat_names)
+        final_df.clusters = final_df.clusters.astype("int64")
+        return(final_df)
 
 
     # use conditionals and iteration to get each cluster's matrix
