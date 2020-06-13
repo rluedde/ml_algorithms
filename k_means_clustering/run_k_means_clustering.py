@@ -10,9 +10,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 df = sb.load_dataset("iris")
-
-km = KMeansClassifier(3 , 5, df.sepal_length, df.petal_length)
+# df = pd.DataFrame({"x":[1,2,37,34,15, 12],  "y":[1,2,37,34,15, 12], "z":[1,2,37,34,5,12]})
+km = KMeansClassifier(4 , 10, df.sepal_length, df.petal_length)
 class_df = km.classify()
+print(class_df)
 
 sb.scatterplot(x = class_df.sepal_length, y = class_df.petal_length, hue = class_df.clusters)
 plt.show()
