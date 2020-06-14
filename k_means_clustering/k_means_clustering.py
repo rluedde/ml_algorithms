@@ -6,9 +6,10 @@ from functools import reduce
 class KMeansClassifier:
 
     # Don't pass features in an iterable 
-    def __init__(self, k, attempts, *features):
+    def __init__(self, k, cluster_names, attempts, *features):
         # number of clusters
         self.k = k
+        self.cluster_names = cluster_names
         self.num_features = len(features)
         # array of features
         self.features = np.array(list(map(lambda ser: np.array(ser), features))).transpose()
@@ -82,6 +83,7 @@ class KMeansClassifier:
         final_df = pd.DataFrame(data, columns=self.feat_names)
         # In the case that the classifications are floats for some reason, turn them into ints:
         final_df.clusters = final_df.clusters.astype("int64")
+        final_df = final_df.replace({"clusters": self.cluster_names})
         return(final_df)
 
 
