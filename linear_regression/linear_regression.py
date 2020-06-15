@@ -37,12 +37,15 @@ class LinearModel:
                 m_prime = -(2/n) * sum(self.X * (self.y - yhat))
                 # dcost/dyint
                 yint_prime = -(2/n) * sum(self.y - yhat)
-                m = m - lr * yint_prime
-                yint = yint - lr * m_prime
+                m = m - lr * m_prime
+                yint = yint - lr * yint_prime
 
                 # Uncomment to see every 5 iterations 
+                """
                 if i % 100 == 0 or i <= 10:
                     print(f"dm: {m_prime} cost: {cost} dy: {yint_prime} m:{m}")
+                """
+
 
         # Calculate R and R^2 
         xbar = self.X.mean()
