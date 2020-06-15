@@ -25,7 +25,9 @@ class LinearModel:
             m = ((n * sum_xy) - (sum_x * sum_y)) /\
                 ((n * sum_x2) - (sum_x)**2)
             yint = np.mean(self.y) - m * np.mean(self.X)
-
+            yhat = (self.X * m) + yint
+            cost = (1/n) * sum((yhat - self.y)**2)
+            print("cost", cost)
         # Use the gradient descent learning method
         elif self.method == "gd":
             m = yint = 0
@@ -41,10 +43,8 @@ class LinearModel:
                 yint = yint - lr * yint_prime
 
                 # Uncomment to see every 5 iterations 
-                """
                 if i % 100 == 0 or i <= 10:
                     print(f"dm: {m_prime} cost: {cost} dy: {yint_prime} m:{m}")
-                """
 
 
         # Calculate R and R^2 
