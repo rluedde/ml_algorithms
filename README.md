@@ -5,9 +5,14 @@ regression and k-means clustering models.
 
 ## Repository Structure
 
-ml_algorithms (main directory)
-- linear_regression.py - `class LinearModel`                
-- k_means_clustering.py - `class KMeansClassifier`
+- ml_algorithms (main directory)
+  - linear_regression.py - `class LinearModel`                
+  - k_means_clustering.py - `class KMeansClassifier`
+
+## Results
+
+![](/images/k_means_visual.png)
+![](/images/lin_reg_visual.png)
 
 ## Future Work
 
