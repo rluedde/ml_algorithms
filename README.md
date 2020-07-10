@@ -12,6 +12,8 @@ ml_algorithms (main directory)
 ## Future Work
 
 * Add logistic regression, naive Bayes, or a decision tree of some sort
+* Put on PyPi so this can be installied via `conda`? I'm doubt that's worth it because there's
+libraries that do the same thing and probably much more efficiently.
 
 ## Contributions
 
