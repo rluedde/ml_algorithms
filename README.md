@@ -4,12 +4,10 @@ This repository contains matrix-based Python implementations of linear
 regression and k-means clustering models. 
 
 ## Repository Structure
-            
-                 - linear_regression.py - `class LinearModel`
-                /
-ml_algorithms -
-                \
-                 - k_means_clustering.py - `class KMeansClassifier`
+
+ml_algorithms (main directory)
+- linear_regression.py - `class LinearModel`                
+- k_means_clustering.py - `class KMeansClassifier`
 
 ## Future Work
 
