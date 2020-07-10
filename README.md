@@ -5,7 +5,7 @@ regression and k-means clustering models.
 
 # Future Work
 
-Potentially add logistic regression. naive Bayes, or a decision tree of some sort.
+* Add logistic regression, naive Bayes, or a decision tree of some sort
 
 # Contributions
 
